@@ -48,7 +48,7 @@
 			board[i] = new Array(columns + 2);
 			playBoard[i] = new Array(columns + 2);
 		}
-		const possibleValues = new Array(rows * columns - 1).fill(0).map((_, i) => i + 1);
+		const possibleValues = new Array(rows * columns).fill(0).map((_, i) => i);
 		const spots = shuffle(possibleValues);
 		for (let i = 0; i < mines; i++) {
 			const spot = spots.next().value as number;
