@@ -44,33 +44,27 @@
 		error = '';
 		board = [];
 		playBoard = [];
-		for (let i = 0; i < rows + 2; i++) {
-			board[i] = new Array(columns + 2);
-			playBoard[i] = new Array(columns + 2);
+		for (let i = 0; i < rows; i++) {
+			board[i] = new Array(columns);
+			playBoard[i] = new Array(columns);
 		}
 		const possibleValues = new Array(rows * columns).fill(0).map((_, i) => i);
 		const spots = shuffle(possibleValues);
 		for (let i = 0; i < mines; i++) {
 			const spot = spots.next().value as number;
-			const row = Math.floor(spot / columns) + 1;
-			const column = (spot % columns) + 1;
+			const row = Math.floor(spot / columns);
+			const column = spot % columns;
 			board[row][column] = -1;
 		}
 		let row = 0;
 		let column = -1;
-		for (let i = 0; i < (rows + 2) * (columns + 2); i++) {
-			if (column == columns + 1) {
+		for (let i = 0; i < rows * columns; i++) {
+			if (column == columns - 1) {
 				row++;
 				column = -1;
 			}
 			column++;
 			board[row][column] = countBombs(row, column);
-		}
-		playBoard[0] = board[0];
-		playBoard[rows + 1] = board[rows + 1];
-		for (let i = 1; i < rows + 1; i++) {
-			playBoard[i][0] = board[i][0];
-			playBoard[i][columns + 1] = board[i][columns + 1];
 		}
 	};
 	resetBoard();
@@ -91,8 +85,8 @@
 		if (val === 0) {
 			for (let i = -1; i <= 1; i++) {
 				for (let j = -1; j <= 1; j++) {
-					if (row + i == 0 || row + i == rows + 1) continue;
-					if (column + j == 0 || column + j == columns + 1) continue;
+					if (row + i < 0 || row + i == rows) continue;
+					if (column + j < 0 || column + j == columns) continue;
 					if (playBoard[row + i][column + j] !== undefined) continue;
 					revealSpot(row + i, column + j);
 				}
