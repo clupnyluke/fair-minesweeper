@@ -29,6 +29,8 @@
   },
   "type": "module",
   "dependencies": {
+    "@fontsource/poppins": "^5.0.8",
+    "material-icons": "^1.13.12",
     "scss": "^0.2.4"
   }
 }
